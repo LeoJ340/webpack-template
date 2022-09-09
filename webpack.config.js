@@ -22,6 +22,10 @@ module.exports = env => {
             rules: [{
                 oneOf: [
                     {
+                        test: /\.hbs$/,
+                        loader: "handlebars-loader"
+                    },
+                    {
                         test: /\.css$/,
                         use: [ MiniCssExtractPlugin.loader, 'css-loader'],
                         exclude: path.resolve(__dirname, 'src/components')
