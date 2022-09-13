@@ -1,7 +1,8 @@
-main {
-    margin-top: 60px;
+:host {
+    display: block;
     text-align: center;
 }
-main img {
+:host img {
+    margin-top: 60px;
     width: 300px;
 }
