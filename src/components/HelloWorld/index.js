@@ -2,7 +2,7 @@ import BaseElement from "../Base";
 import styleModule from 'css-loader!./index.css'
 import template from './index.hbs'
 
-export default class Test extends BaseElement {
+export default class HelloWorld extends BaseElement {
     constructor() {
         super();
     }

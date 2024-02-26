@@ -49,6 +49,15 @@ module.exports = env => {
                         include: path.resolve(__dirname, 'src'),
                         use: ['babel-loader']
                     },
+                    // 自定义一个 babel-loader
+                    // {
+                    //     test: /\.js$/,
+                    //     include: path.resolve(__dirname, 'src'),
+                    //     loader: './loader/babel-loader',
+                    //     options: {
+                    //         presets: ['@babel/preset-env']
+                    //     }
+                    // }
                 ]
             }]
         },
