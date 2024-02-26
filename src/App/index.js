@@ -1,7 +1,7 @@
-import BaseElement from "../Base";
+import BaseElement from "@components/Base";
 import styleModule from 'css-loader!./app.css'
 import template from './app.hbs'
-import HelloWorld from "../HelloWorld";
+import HelloWorld from "@components/HelloWorld";
 
 /**
  * 新巴士小巴司机还行把手机号先把数据相比
@@ -16,7 +16,7 @@ export default class App extends BaseElement {
         HelloWorld.register()
     }
     getTemplate() {
-        const homeImg = require('../../assets/home.jpg')
+        const homeImg = require('@/assets/home.jpg')
         return template({homeImg})
     }
     getStyle() {

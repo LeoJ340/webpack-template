@@ -78,6 +78,12 @@ module.exports = env => {
                 context: path.resolve(__dirname, 'src')
             }),
         ],
+        resolve: {
+            alias: {
+                '@': path.resolve(__dirname, 'src/'),
+                '@components': path.resolve(__dirname, 'src/components/')
+            }
+        },
         devServer: {
             port: 88,
             open: true

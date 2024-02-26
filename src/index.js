@@ -1,4 +1,4 @@
 import './styles/style.css' // global style
-import App from './components/App'
+import App from './App'
 
 App.mount('app')
