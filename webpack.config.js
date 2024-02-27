@@ -19,47 +19,54 @@ module.exports = env => {
             clean: true
         },
         module: {
-            rules: [{
-                oneOf: [
-                    {
-                        test: /\.hbs$/,
-                        loader: "handlebars-loader"
-                    },
-                    {
-                        test: /\.css$/,
-                        use: [ MiniCssExtractPlugin.loader, 'css-loader'],
-                        exclude: path.resolve(__dirname, 'src/components')
-                    },
-                    {
-                        test: /\.(png|svg|jpe?g|gif|webp)$/i,
-                        type: 'asset',
-                        generator: {
-                            filename: 'static/[hash][ext][query]'
+            rules: [
+                {
+                    oneOf: [
+                        {
+                            test: /\.hbs$/,
+                            loader: "handlebars-loader"
                         },
-                    },
-                    {
-                        test: /\.(woff|woff2|eot|ttf|otf)$/i,
-                        type: 'asset/resource',
-                        generator: {
-                            filename: 'static/[hash][ext][query]'
-                        }
-                    },
-                    {
-                        test: /\.js$/,
-                        include: path.resolve(__dirname, 'src'),
-                        use: ['babel-loader']
-                    },
-                    // 自定义一个 babel-loader
-                    // {
-                    //     test: /\.js$/,
-                    //     include: path.resolve(__dirname, 'src'),
-                    //     loader: './loader/babel-loader',
-                    //     options: {
-                    //         presets: ['@babel/preset-env']
-                    //     }
-                    // }
-                ]
-            }]
+                        {
+                            test: /\.css$/,
+                            use: [ MiniCssExtractPlugin.loader, 'css-loader'],
+                            exclude: path.resolve(__dirname, 'src/components')
+                        },
+                        {
+                            test: /\.(png|svg|jpe?g|gif|webp)$/i,
+                            type: 'asset',
+                            generator: {
+                                filename: 'static/[hash][ext][query]'
+                            },
+                        },
+                        {
+                            test: /\.(woff|woff2|eot|ttf|otf)$/i,
+                            type: 'asset/resource',
+                            generator: {
+                                filename: 'static/[hash][ext][query]'
+                            }
+                        },
+                        {
+                            test: /\.js$/,
+                            include: path.resolve(__dirname, 'src'),
+                            use: ['babel-loader', {
+                                loader: './loader/utils2md-loader',
+                                options: {
+                                    outputFile: 'utils.md' // 可选参数，指定输出文件路径
+                                }
+                            }],
+                        },
+                        // 自定义一个 babel-loader
+                        // {
+                        //     test: /\.js$/,
+                        //     include: path.resolve(__dirname, 'src'),
+                        //     loader: './loader/babel-loader',
+                        //     options: {
+                        //         presets: ['@babel/preset-env']
+                        //     }
+                        // },
+                    ]
+                }
+            ]
         },
         optimization: {
             minimizer: [
