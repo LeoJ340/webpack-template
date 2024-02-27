@@ -4,6 +4,7 @@ const loaderUtils = require('loader-utils');
 
 // 提取注释正则表达式
 const commentRegex = /\/\*[\s\S]*?\*\//g
+const defaultOutputPath = 'utils.md'
 
 /**
  * @author leoJ
@@ -18,10 +19,14 @@ module.exports = function (content) {
     const title = path.basename(this.resourcePath)
     // 获取输出文档的路径
     const options = loaderUtils.getOptions(this);
-    const outputPath = options.outputFile || 'utils.md';
-    output(commentList, outputPath, title)
-    // 返回原始源代码（不包含注释）
-    return content.replace(commentRegex, '');
+    const outputPath = options.outputFile || defaultOutputPath;
+    // 异步处理
+    const callback = this.async()
+    output(commentList, outputPath, title).then(() => {
+        callback(null, content.replace(commentRegex, ''));
+    }).catch(err => {
+        callback(err, content.replace(commentRegex, ''));
+    })
 };
 
 // 解析注释
@@ -49,16 +54,33 @@ function parseComment(content){
     })
 }
 
-
-
 // 输出文档
 function output(commentList, path, title) {
-    fs.appendFileSync(path, `# ${title}\r\n`)
-    for (const comment of commentList) {
-        for (const key in comment) {
-            fs.appendFileSync(path, `##### ${key}\r\n`)
-            fs.appendFileSync(path, `${comment[key]}\r\n`)
+    return new Promise((resolve, reject) => {
+        if (!commentList || !commentList.length) {
+            reject('comment is not defined')
         }
-        fs.appendFileSync(path, '---\r\n')
-    }
+        const beginTime = Date.now()
+        const ws = fs.createWriteStream(path, { flags: 'a' })
+        ws.on('finish', () => {
+            console.log(`写入完成，耗时：${Date.now() - beginTime} ms`);
+        });
+        ws.on('error', (err) => {
+            ws.destroy();
+            reject(`写入错误：${err}`)
+        });
+        ws.write(`# ${title}\r\n`)
+        for (const [index, comment] of commentList.entries()) {
+            for (const key in comment) {
+                ws.write(`##### ${key}\r\n`)
+                // ws.emit('error', 'hhh 出错啦'); // 错误测试
+                ws.write(`${comment[key]}\r\n`)
+            }
+            if (index < commentList.length - 1) {
+                ws.write('---\r\n')
+            }
+        }
+        ws.end();
+        resolve()
+    })
 }
