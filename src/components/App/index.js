@@ -3,11 +3,6 @@ import styleModule from 'css-loader!./app.css'
 import template from './app.hbs'
 import HelloWorld from "@components/HelloWorld";
 
-/**
- * 新巴士小巴司机还行把手机号先把数据相比
- * 我想八十八
- */
-// 我想八十八
 export default class App extends BaseElement {
     constructor(mode = 'open') {
         super(mode);
