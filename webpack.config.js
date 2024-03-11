@@ -51,7 +51,7 @@ module.exports = env => {
                             use: ['babel-loader', {
                                 loader: './loader/utils2md-loader',
                                 options: {
-                                    outputFile: 'utils.md' // 可选参数，指定输出文件路径
+                                    outputPath: 'utils', // 可选参数，指定输出路径
                                 }
                             }],
                         },
