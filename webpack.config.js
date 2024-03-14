@@ -3,6 +3,9 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const ESLintPlugin = require('eslint-webpack-plugin');
+const LifePlugin = require('./plugins/life-plugin');
+const AnalyzePlugin = require('./plugins/analyze-plugin');
+const InlineChunkPlugin = require('./plugins/inline-chunk-plugin');
 
 const title = 'webpack-template'
 
@@ -71,7 +74,13 @@ module.exports = env => {
         optimization: {
             minimizer: [
                 new CssMinimizerPlugin(),
-            ]
+            ],
+            splitChunks: {
+                chunks: "all"
+            },
+            runtimeChunk: {
+                name: 'runtime',
+            }
         },
         plugins: [
             new HtmlWebpackPlugin({
@@ -84,6 +93,16 @@ module.exports = env => {
             new ESLintPlugin({
                 context: path.resolve(__dirname, 'src')
             }),
+            // 生命周期插件
+            new LifePlugin(),
+            // 输出文件分析插件
+            new AnalyzePlugin({
+                outputFile: 'analyze.md',
+                title: '分析打包资源大小'
+            }),
+            new InlineChunkPlugin({
+                size: 14 // 限制小于此大小（kb）的js文件内联到html里
+            })
         ],
         resolve: {
             alias: {
