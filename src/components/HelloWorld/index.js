@@ -19,7 +19,7 @@ export default class HelloWorld extends BaseElement {
         const style = styleModule[0][1]
         return `<style>${style}</style>`
     }
-    static register(tagName = 'test-container') {
+    static register(tagName = 'hello-world') {
         customElements.define(tagName, this);
         return tagName
     }

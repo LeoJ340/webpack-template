@@ -94,7 +94,7 @@ module.exports = env => {
                 context: path.resolve(__dirname, 'src')
             }),
             // 生命周期插件
-            new LifePlugin(),
+            // new LifePlugin(),
             // 输出文件分析插件
             new AnalyzePlugin({
                 outputFile: 'analyze.md',
