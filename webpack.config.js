@@ -100,9 +100,9 @@ module.exports = env => {
                 outputFile: 'analyze.md',
                 title: '分析打包资源大小'
             }),
-            new InlineChunkPlugin({
-                size: 14 // 限制小于此大小（kb）的js文件内联到html里
-            })
+            // new InlineChunkPlugin({
+            //     size: 14 // 限制小于此大小（kb）的js文件内联到html里
+            // })
         ],
         resolve: {
             alias: {

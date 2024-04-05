@@ -1,3 +1,11 @@
+:host {
+    display: block;
+    text-align: center;
+}
+:host img {
+    margin-top: 60px;
+    width: 300px;
+}
 :host h5 {
     text-align: center;
 }

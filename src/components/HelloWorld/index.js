@@ -4,11 +4,12 @@ import template from './index.hbs'
 
 export default class HelloWorld extends BaseElement {
     constructor() {
-        super();
+        super('open');
     }
     data() {
         return {
-            message: 'Hello World'
+            message: 'Hello World',
+            homeImg: require('@/assets/home.jpg')
         }
     }
     getTemplate() {

@@ -11,8 +11,7 @@ export default class App extends BaseElement {
         HelloWorld.register()
     }
     getTemplate() {
-        const homeImg = require('@/assets/home.jpg')
-        return template({homeImg})
+        return template()
     }
     getStyle() {
         const style = styleModule[0][1]
