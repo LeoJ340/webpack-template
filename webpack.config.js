@@ -26,13 +26,9 @@ module.exports = env => {
                 {
                     oneOf: [
                         {
-                            test: /\.hbs$/,
-                            loader: "handlebars-loader"
-                        },
-                        {
                             test: /\.css$/,
                             use: [ MiniCssExtractPlugin.loader, 'css-loader'],
-                            exclude: path.resolve(__dirname, 'src/components')
+                            exclude: path.resolve(__dirname, 'src')
                         },
                         {
                             test: /\.(png|svg|jpe?g|gif|webp)$/i,

@@ -1,6 +1,5 @@
 import BaseElement from "@components/Base";
 import styleModule from 'css-loader!./app.css'
-import template from './app.hbs'
 import HelloWorld from "@components/HelloWorld";
 
 export default class App extends BaseElement {
@@ -11,7 +10,7 @@ export default class App extends BaseElement {
         HelloWorld.register()
     }
     getTemplate() {
-        return template()
+        return '<hello-world></hello-world>'
     }
     getStyle() {
         const style = styleModule[0][1]
@@ -25,5 +24,17 @@ export default class App extends BaseElement {
         const tagName = this.register()
         const app = document.createElement(tagName);
         document.getElementById(id).appendChild(app)
+    }
+    connectedCallback() {
+        console.log('App added to page.');
+    }
+    disconnectedCallback() {
+        console.log('App removed from page.');
+    }
+    adoptedCallback() {
+        console.log('App moved to new page.');
+    }
+    attributeChangedCallback(name, oldValue, newValue) {
+        console.log(`App attribute ${name} from ${oldValue} to ${newValue}`);
     }
 }
