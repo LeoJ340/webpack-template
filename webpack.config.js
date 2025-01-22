@@ -28,7 +28,7 @@ module.exports = env => {
                         {
                             test: /\.css$/,
                             use: [ MiniCssExtractPlugin.loader, 'css-loader'],
-                            exclude: path.resolve(__dirname, 'src')
+                            exclude: path.resolve(__dirname, 'src/components') // 排除组件内的样式
                         },
                         {
                             test: /\.(png|svg|jpe?g|gif|webp)$/i,
