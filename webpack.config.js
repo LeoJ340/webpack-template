@@ -3,9 +3,6 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const ESLintPlugin = require('eslint-webpack-plugin');
-const LifePlugin = require('./plugins/life-plugin');
-const AnalyzePlugin = require('./plugins/analyze-plugin');
-const InlineChunkPlugin = require('./plugins/inline-chunk-plugin');
 
 const title = 'webpack-template'
 
@@ -47,22 +44,8 @@ module.exports = env => {
                         {
                             test: /\.js$/,
                             include: path.resolve(__dirname, 'src'),
-                            use: ['babel-loader', {
-                                loader: './loader/utils2md-loader',
-                                options: {
-                                    outputPath: 'utils', // 可选参数，指定输出路径
-                                }
-                            }],
+                            use: ['babel-loader'],
                         },
-                        // 自定义一个 babel-loader
-                        // {
-                        //     test: /\.js$/,
-                        //     include: path.resolve(__dirname, 'src'),
-                        //     loader: './loader/babel-loader',
-                        //     options: {
-                        //         presets: ['@babel/preset-env']
-                        //     }
-                        // },
                     ]
                 }
             ]
@@ -89,16 +72,6 @@ module.exports = env => {
             new ESLintPlugin({
                 context: path.resolve(__dirname, 'src')
             }),
-            // 生命周期插件
-            // new LifePlugin(),
-            // 输出文件分析插件
-            new AnalyzePlugin({
-                outputFile: 'analyze.md',
-                title: '分析打包资源大小'
-            }),
-            // new InlineChunkPlugin({
-            //     size: 14 // 限制小于此大小（kb）的js文件内联到html里
-            // })
         ],
         resolve: {
             alias: {
