@@ -6,15 +6,18 @@
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server",
-    "build": "webpack --env production"
+    "build": "webpack --env production",
+    "eslint": "npx eslint --ext .js src"
   },
   "devDependencies": {
     "@babel/core": "^7.18.13",
+    "@babel/eslint-parser": "^7.26.5",
     "@babel/preset-env": "^7.18.10",
     "babel-loader": "^8.2.5",
     "css-loader": "^6.7.1",
     "css-minimizer-webpack-plugin": "^4.0.0",
     "eslint": "^8.22.0",
+    "eslint-config-standard": "^17.1.0",
     "eslint-webpack-plugin": "^3.2.0",
     "html-webpack-plugin": "^5.5.0",
     "mini-css-extract-plugin": "^2.6.1",

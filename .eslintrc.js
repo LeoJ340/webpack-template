@@ -4,8 +4,13 @@ module.exports = {
     browser: true,
     es6: true
   },
+  parser: '@babel/eslint-parser',
   parserOptions: {
-    sourceType: "module"
+    sourceType: 'module',
+    ecmaVersion: 2020
   },
-  extends: ['eslint:recommended'],
-};
+  extends: ['standard'],
+  rules: {
+    'import/no-webpack-loader-syntax': 'off'
+  }
+}
