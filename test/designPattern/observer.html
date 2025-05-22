@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>observer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .input-section {
+            margin-bottom: 20px;
+        }
+        .input-section input {
+            width: 70%;
+            padding: 10px;
+            margin-right: 10px;
+            font-size: 16px;
+        }
+        .input-section button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .updates {
+            border: 1px solid #ccc;
+            padding: 10px;
+            min-height: 100px;
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="input-section">
+        <input type="text" id="userInput" placeholder="Enter your update here">
+        <button id="publishButton">Publish</button>
+    </div>
+    <div class="updates" id="updatesContainer"></div>
+</div>
+<script>
+  // 观察者
+  class Observer {
+    constructor (name, behavior) {
+      this.name = name
+      this.behavior = behavior
+    }
+
+    update (post) {
+      const updatesContainer = document.getElementById('updatesContainer')
+      const updateItem = document.createElement('div')
+      updateItem.className = 'update-item'
+      updateItem.textContent = `${this.name} received: ${post} and ${this.behavior}`
+      updatesContainer.appendChild(updateItem)
+    }
+  }
+  // 主体
+  class Subject {
+    constructor () {
+      this.list = [] // 观察者列表
+      this.post = '还没更新'
+    }
+
+    // 添加观察者
+    attach (update) {
+      this.list.push(update)
+    }
+    // 移除观察者
+    detach (update) {
+      const index = this.list.indexOf(update)
+      if (index > -1) {
+        this.list.splice(index, 1)
+      }
+    }
+    // 通知观察者
+    notifyObserver () {
+      for (const observer of this.list) {
+        observer(this.post)
+      }
+    }
+
+    writePost (p) {
+      this.post = p
+    }
+  }
+
+  const userA = new Observer('UserA', '点赞')
+  const userB = new Observer('UserB', '转发')
+  const userC = new Observer('UserC', '收藏')
+
+  const subject = new Subject()
+
+  subject.attach(userA.update.bind(userA))
+  subject.attach(userB.update.bind(userB))
+  subject.attach(userC.update.bind(userC))
+
+  document.getElementById('publishButton').addEventListener('click', () => {
+    const userInput = document.getElementById('userInput')
+    const content = userInput.value.trim()
+    if (content) {
+      subject.writePost(content)
+      subject.notifyObserver()
+      userInput.value = '' // Clear the input field
+    }
+  })
+
+</script>
+</body>
+</html>

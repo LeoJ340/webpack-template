@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+  class EventBus {
+    constructor () {
+      this.observersMap = {}
+    }
+
+    listen (key, fn) {
+      if (!this.observersMap[key]) {
+        this.observersMap[key] = []
+      }
+      // 如果没有重复的函数，才添加
+      if (!this.observersMap[key].includes(fn)) {
+        this.observersMap[key].push(fn)
+      }
+    }
+
+    trigger () {
+      const key = Array.prototype.shift.call(arguments)
+      const fns = this.observersMap[key]
+      if (!fns || fns.length === 0) {
+        return false
+      }
+      for (const fn of fns) {
+        fn.apply(this, arguments)
+      }
+    }
+
+    remove (key, fn) {
+      const fns = this.observersMap[key]
+      if (!fns) {
+        return false
+      }
+      if (!fn) {
+        // 如果没有传入 fn，则删除 key 对应的所有函数
+        delete this.observersMap[key]
+      } else {
+        for (let l = fns.length - 1; l >= 0; l--) {
+          const _fn = fns[l]
+          if (_fn === fn) {
+            fns.splice(l, 1)
+          }
+        }
+      }
+    }
+  }
+
+  const UserA = {
+    update (content) {
+      console.log('UserA received:', content)
+    }
+  }
+  const UserB = {
+    update (content) {
+      console.log('UserB received:', content)
+    }
+  }
+  const UserC = {
+    update (content) {
+      console.log('UserC received:', content)
+    }
+  }
+
+  const eventBus = new EventBus()
+
+  eventBus.listen('publish', UserA.update)
+  eventBus.listen('publish', UserB.update)
+  eventBus.listen('publish', UserC.update)
+  eventBus.trigger('publish', 'Hello, world!') // 所有用户都能收到消息
+</script>
+</body>
+</html>
